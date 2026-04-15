@@ -139,7 +139,7 @@ function DemoModal({ demoId, onClose }) {
             exit={{ opacity: 0, y: 10, scale: 0.98 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-[640px] card p-6 sm:p-8"
+            className="relative w-full max-w-[640px] max-h-[90vh] overflow-y-auto card p-6 sm:p-8"
           >
             <button
               onClick={onClose}
@@ -266,7 +266,7 @@ function VoiceDemo() {
       </p>
 
       <div className="mt-6 rounded-2xl border border-white/8 bg-ink-900/60 p-5">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <div className="flex items-center gap-3">
             <div className="relative">
               <div className={`h-10 w-10 rounded-full bg-bee-400/15 grid place-items-center text-bee-300`}>

@@ -78,7 +78,7 @@ function FloatingChatButton({ onClick, hidden }) {
   return (
     <button
       onClick={onClick}
-      className="fixed bottom-5 right-5 z-40 grid h-14 w-14 place-items-center rounded-full bg-bee-400 text-ink-950 shadow-[0_20px_60px_-10px_rgba(255,221,34,0.7)] hover:bg-bee-300 transition"
+      className="fixed bottom-3 right-3 sm:bottom-5 sm:right-5 z-40 grid h-12 w-12 sm:h-14 sm:w-14 place-items-center rounded-full bg-bee-400 text-ink-950 shadow-[0_20px_60px_-10px_rgba(255,221,34,0.7)] hover:bg-bee-300 transition"
       aria-label="Открыть AI-чат"
     >
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

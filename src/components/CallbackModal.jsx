@@ -58,7 +58,7 @@ export default function CallbackModal({ open, onClose }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.98 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-[520px] card p-6 sm:p-8"
+            className="relative w-full max-w-[520px] max-h-[90vh] overflow-y-auto card p-6 sm:p-8"
           >
             <button
               onClick={reset}
