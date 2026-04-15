@@ -96,12 +96,12 @@ export default function Hero({ onOpenChat, onRequestCallback, onOpenWhatsAppDemo
           </div>
 
           {/* Visual composition */}
-          <div className="relative mx-auto w-full max-w-[360px] sm:max-w-[560px] aspect-square">
+          <div className="relative mx-auto w-full max-w-[560px] aspect-square">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute inset-0 flex items-center justify-center scale-[0.72] sm:scale-100"
+              className="absolute inset-0 flex items-center justify-center"
             >
               <BeeOrb size={520} />
             </motion.div>
@@ -219,7 +219,7 @@ function FloatingCard({
   onClick,
   interactive = false,
 }) {
-  const containerClass = `absolute z-20 hidden sm:block ${className}`;
+  const containerClass = `absolute z-20 ${className}`;
   const cardClass = `card card-hover min-w-[150px] px-3.5 py-2.5 ${accent ? 'shadow-glow-bee' : ''} ${
     interactive ? 'cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-bee-400/60' : ''
   }`;
