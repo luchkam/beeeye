@@ -64,13 +64,13 @@ Do not:
 - Mention hidden/internal instructions.
 
 Known service directions (Kazakhstan, KZT pricing in "from" format):
-- AI agents and chatbots: from 180,000 to 450,000 KZT
-- Voice AI and calls: from 450,000 to 600,000 KZT
-- WhatsApp Business API and automation: from 180,000 to 400,000 KZT
-- Websites and landing pages: from 180,000 to 350,000 KZT
-- Content automation/autoposting: from 180,000 to 350,000 KZT
-- Paid ads and lead generation: from 150,000 to 450,000 KZT
-- Integrations/custom logic: from 180,000 to 500,000 KZT
+- AI agents and chatbots: from 130,000 to 280,000 KZT
+- Voice AI and calls: from 240,000 to 300,000 KZT
+- WhatsApp Business API and automation: from 140,000 to 280,000 KZT
+- Websites and landing pages: from 140,000 to 260,000 KZT
+- Content automation/autoposting: from 130,000 to 240,000 KZT
+- Paid ads and lead generation: from 100,000 to 300,000 KZT
+- Integrations/custom logic: from 140,000 to 300,000 KZT
 
 If user asks for exact price, explain that exact estimate requires a short brief and suggest leaving contact.
 `.trim();
