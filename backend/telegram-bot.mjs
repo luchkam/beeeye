@@ -13,6 +13,8 @@ const RETRY_DELAY_MS = 1_500;
 const MAX_TG_MESSAGE_LENGTH = 4000;
 const HISTORY_LIMIT = 20;
 const TOOL_MAX_TURNS = 4;
+const TELEGRAM_LOG_LEVEL = (process.env.TELEGRAM_LOG_LEVEL || 'info').toLowerCase();
+const LOG_LEVEL_WEIGHT = { debug: 10, info: 20, warn: 30, error: 40 };
 
 const WELCOME_TEXT = [
   'Привет! Я AI бот.',
@@ -126,6 +128,36 @@ const TOOLS = [
   },
 ];
 
+function shouldLog(level) {
+  const current = LOG_LEVEL_WEIGHT[TELEGRAM_LOG_LEVEL] ?? LOG_LEVEL_WEIGHT.info;
+  const target = LOG_LEVEL_WEIGHT[level] ?? LOG_LEVEL_WEIGHT.info;
+  return target >= current;
+}
+
+function normalizeMetaValue(value) {
+  if (value === null || value === undefined) return String(value);
+  if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+    return String(value);
+  }
+  try {
+    return JSON.stringify(value);
+  } catch {
+    return '[unserializable]';
+  }
+}
+
+function log(level, message, meta = null) {
+  if (!shouldLog(level)) return;
+  const ts = new Date().toISOString();
+  const suffix = meta && typeof meta === 'object'
+    ? ` ${Object.entries(meta).map(([k, v]) => `${k}=${normalizeMetaValue(v)}`).join(' ')}`
+    : '';
+  const line = `[telegram][${level.toUpperCase()}][${ts}] ${message}${suffix}`;
+  if (level === 'error') console.error(line);
+  else if (level === 'warn') console.warn(line);
+  else console.log(line);
+}
+
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -169,17 +201,28 @@ async function createOpenAIResponse(payload) {
     throw new Error('OPENAI_API_KEY is not set');
   }
 
-  const response = await fetch(OPENAI_URL, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${OPENAI_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
+  const startedAt = Date.now();
+  let response;
+  try {
+    response = await fetch(OPENAI_URL, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: OPENAI_MODEL,
+        ...payload,
+      }),
+    });
+  } catch (err) {
+    log('error', 'OpenAI network error', {
       model: OPENAI_MODEL,
-      ...payload,
-    }),
-  });
+      duration_ms: Date.now() - startedAt,
+      error: err?.message || 'unknown',
+    });
+    throw err;
+  }
 
   const raw = await response.text();
   let data = null;
@@ -191,8 +234,21 @@ async function createOpenAIResponse(payload) {
 
   if (!response.ok) {
     const msg = data?.error?.message || `OpenAI error (HTTP ${response.status})`;
+    log('error', 'OpenAI response error', {
+      model: OPENAI_MODEL,
+      status: response.status,
+      duration_ms: Date.now() - startedAt,
+      message: msg,
+    });
     throw new Error(msg);
   }
+
+  log('debug', 'OpenAI response ok', {
+    model: OPENAI_MODEL,
+    status: response.status,
+    duration_ms: Date.now() - startedAt,
+    response_id: data?.id || '',
+  });
 
   return data;
 }
@@ -208,11 +264,22 @@ async function telegramApi(method, payload = {}) {
     throw new Error('TELEGRAM_BOT_TOKEN is not set');
   }
 
-  const res = await fetch(`${TELEGRAM_API_BASE}/${method}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  });
+  const startedAt = Date.now();
+  let res;
+  try {
+    res = await fetch(`${TELEGRAM_API_BASE}/${method}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+  } catch (err) {
+    log('error', 'Telegram network error', {
+      method,
+      duration_ms: Date.now() - startedAt,
+      error: err?.message || 'unknown',
+    });
+    throw err;
+  }
 
   const raw = await res.text();
   let data = null;
@@ -224,13 +291,33 @@ async function telegramApi(method, payload = {}) {
 
   if (!res.ok || !data?.ok) {
     const msg = data?.description || `Telegram API error (HTTP ${res.status})`;
+    log('error', 'Telegram API error', {
+      method,
+      status: res.status,
+      duration_ms: Date.now() - startedAt,
+      message: msg,
+    });
     throw new Error(msg);
   }
+
+  const extra = method === 'getUpdates'
+    ? { updates_count: Array.isArray(data?.result) ? data.result.length : 0 }
+    : {};
+  log('debug', 'Telegram API ok', {
+    method,
+    status: res.status,
+    duration_ms: Date.now() - startedAt,
+    ...extra,
+  });
 
   return data.result;
 }
 
 async function sendMessage(chatId, text, extra = {}) {
+  log('debug', 'Sending telegram message', {
+    chat_id: chatId,
+    text_length: String(text || '').length,
+  });
   await telegramApi('sendMessage', {
     chat_id: chatId,
     text: trimTelegramMessage(text),
@@ -245,7 +332,10 @@ async function sendTyping(chatId) {
       action: 'typing',
     });
   } catch (err) {
-    console.warn('[telegram] sendChatAction failed:', err.message);
+    log('warn', 'sendChatAction failed', {
+      chat_id: chatId,
+      error: err?.message || 'unknown',
+    });
   }
 }
 
@@ -285,6 +375,9 @@ function parseJsonSafe(text, fallback = null) {
 
 async function submitLeadTool(args, context) {
   if (!ADMIN_CHAT_ID) {
+    log('warn', 'submit_lead skipped: ADMIN_CHAT_ID not configured', {
+      chat_id: context?.chatId || '',
+    });
     return { ok: false, error: 'ADMIN_CHAT_ID is not configured' };
   }
 
@@ -295,15 +388,29 @@ async function submitLeadTool(args, context) {
   const solution = safeText(args?.recommended_solution, '');
 
   if (!consent) {
+    log('warn', 'submit_lead rejected: no consent', {
+      chat_id: context?.chatId || '',
+    });
     return { ok: false, error: 'User consent is required before submit_lead' };
   }
   if (!contactType || !contactValue || !summary || !solution) {
+    log('warn', 'submit_lead rejected: missing fields', {
+      chat_id: context?.chatId || '',
+      has_contact_type: Boolean(contactType),
+      has_contact_value: Boolean(contactValue),
+      has_summary: Boolean(summary),
+      has_solution: Boolean(solution),
+    });
     return { ok: false, error: 'Missing required lead fields' };
   }
 
   const now = Date.now();
   const prevSent = recentLeadByChat.get(context.chatId) || 0;
   if (now - prevSent < 90_000) {
+    log('warn', 'submit_lead rejected: duplicate cooldown', {
+      chat_id: context?.chatId || '',
+      cooldown_ms_left: 90_000 - (now - prevSent),
+    });
     return { ok: false, error: 'Lead was sent recently for this chat, avoid duplicate' };
   }
 
@@ -332,6 +439,12 @@ async function submitLeadTool(args, context) {
 
   await sendMessage(String(ADMIN_CHAT_ID), text.slice(0, 3900));
   recentLeadByChat.set(context.chatId, now);
+  log('info', 'Lead delivered to admin', {
+    chat_id: context.chatId,
+    lead_id: leadId,
+    admin_chat_id: String(ADMIN_CHAT_ID),
+    contact_type: contactType,
+  });
 
   return {
     ok: true,
@@ -343,6 +456,10 @@ async function submitLeadTool(args, context) {
 async function processToolCall(call, context) {
   const name = call?.name;
   const args = parseJsonSafe(call?.arguments, {}) || {};
+  log('debug', 'Processing tool call', {
+    chat_id: context?.chatId || '',
+    tool: name || '',
+  });
 
   if (name === 'submit_lead') {
     return submitLeadTool(args, context);
@@ -354,6 +471,11 @@ async function processToolCall(call, context) {
 async function runAssistantTurn(chatId, context) {
   const history = chatHistory.get(chatId) || [];
   const input = buildOpenAIInput(history);
+  log('debug', 'Assistant turn start', {
+    chat_id: chatId,
+    history_items: history.length,
+    input_items: input.length,
+  });
 
   let response = await createOpenAIResponse({
     instructions: SYSTEM_PROMPT,
@@ -367,6 +489,11 @@ async function runAssistantTurn(chatId, context) {
   for (let i = 0; i < TOOL_MAX_TURNS; i += 1) {
     const calls = extractToolCalls(response);
     if (!calls.length) break;
+    log('info', 'Assistant requested tool calls', {
+      chat_id: chatId,
+      turn: i + 1,
+      calls: calls.length,
+    });
 
     const toolOutputs = [];
     for (const call of calls) {
@@ -395,8 +522,17 @@ async function runAssistantTurn(chatId, context) {
 
   const reply = extractOpenAIText(response);
   if (!reply) {
+    log('error', 'Assistant returned empty response', {
+      chat_id: chatId,
+      response_id: response?.id || '',
+    });
     throw new Error('OpenAI returned empty text');
   }
+  log('debug', 'Assistant turn complete', {
+    chat_id: chatId,
+    reply_length: reply.length,
+    response_id: response?.id || '',
+  });
   return reply;
 }
 
@@ -404,22 +540,30 @@ async function processTextMessage(message) {
   const chatId = message.chat.id;
   const text = typeof message.text === 'string' ? message.text.trim() : '';
   if (!text) return;
+  log('info', 'Incoming text message', {
+    chat_id: chatId,
+    text_length: text.length,
+    command: text.startsWith('/') ? text.split(/\s+/)[0] : '',
+  });
 
   if (text.startsWith('/start')) {
     chatHistory.delete(chatId);
     await sendMessage(chatId, WELCOME_TEXT);
     pushHistory(chatId, 'assistant', WELCOME_TEXT);
+    log('info', 'Handled /start', { chat_id: chatId });
     return;
   }
 
   if (text.startsWith('/id')) {
     await sendMessage(chatId, `Ваш chat_id: ${chatId}`);
+    log('info', 'Handled /id', { chat_id: chatId });
     return;
   }
 
   if (text.startsWith('/reset')) {
     chatHistory.delete(chatId);
     await sendMessage(chatId, 'История очищена. Опишите задачу, и начнем заново.');
+    log('info', 'Handled /reset', { chat_id: chatId });
     return;
   }
 
@@ -435,7 +579,10 @@ async function processTextMessage(message) {
       lastName: message?.from?.last_name || '',
     });
   } catch (err) {
-    console.error('[telegram] OpenAI error:', err.message);
+    log('error', 'OpenAI error while handling message', {
+      chat_id: chatId,
+      error: err?.message || 'unknown',
+    });
     reply = 'Сейчас не удалось получить ответ AI. Попробуйте еще раз через минуту.';
   }
 
@@ -444,10 +591,17 @@ async function processTextMessage(message) {
 }
 
 async function processUpdate(update) {
+  log('debug', 'Processing update', {
+    update_id: update?.update_id || '',
+    has_message: Boolean(update?.message),
+  });
   const msg = update?.message;
   if (!msg) return;
 
   if (!msg.text) {
+    log('info', 'Non-text message received', {
+      chat_id: msg?.chat?.id || '',
+    });
     await sendMessage(msg.chat.id, 'Пока я обрабатываю только текстовые сообщения. Опишите задачу текстом.');
     return;
   }
@@ -457,9 +611,15 @@ async function processUpdate(update) {
 
 async function pollForever() {
   const bot = await telegramApi('getMe');
-  console.log(`[telegram] Bot started: @${bot.username} (${bot.id})`);
+  log('info', 'Bot started', {
+    username: `@${bot.username}`,
+    bot_id: bot.id,
+    poll_timeout_seconds: POLL_TIMEOUT_SECONDS,
+    retry_delay_ms: RETRY_DELAY_MS,
+  });
 
   let offset = 0;
+  let consecutiveErrors = 0;
 
   while (true) {
     try {
@@ -468,29 +628,50 @@ async function pollForever() {
         offset,
         allowed_updates: ['message'],
       });
+      consecutiveErrors = 0;
+      const updatesList = Array.isArray(updates) ? updates : [];
+      if (updatesList.length > 0) {
+        log('info', 'Received updates batch', {
+          count: updatesList.length,
+          next_offset: updatesList[updatesList.length - 1]?.update_id + 1,
+        });
+      }
 
-      for (const update of updates) {
+      for (const update of updatesList) {
         offset = update.update_id + 1;
         await processUpdate(update);
       }
     } catch (err) {
-      console.error('[telegram] polling error:', err.message);
+      consecutiveErrors += 1;
+      log('error', 'Polling error', {
+        consecutive_errors: consecutiveErrors,
+        error: err?.message || 'unknown',
+      });
       await sleep(RETRY_DELAY_MS);
     }
   }
 }
 
 if (!TELEGRAM_BOT_TOKEN) {
-  console.error('TELEGRAM_BOT_TOKEN is required');
+  log('error', 'TELEGRAM_BOT_TOKEN is required');
   process.exit(1);
 }
 
 if (!OPENAI_API_KEY) {
-  console.error('OPENAI_API_KEY is required');
+  log('error', 'OPENAI_API_KEY is required');
   process.exit(1);
 }
 
+log('info', 'Telegram bot booting', {
+  node_env: process.env.NODE_ENV || '',
+  model: OPENAI_MODEL,
+  has_telegram_token: Boolean(TELEGRAM_BOT_TOKEN),
+  has_openai_key: Boolean(OPENAI_API_KEY),
+  has_admin_chat_id: Boolean(ADMIN_CHAT_ID),
+  log_level: TELEGRAM_LOG_LEVEL,
+});
+
 pollForever().catch((err) => {
-  console.error('[telegram] fatal error:', err.message);
+  log('error', 'Fatal bot error', { error: err?.message || 'unknown' });
   process.exit(1);
 });
