@@ -147,8 +147,8 @@ export default function ElstomLanding() {
                 <img src={logoImage} alt="" className="elstom-glass-card__logo" />
                 <h3>Премиальная стоматология c акцентом на комфорт</h3>
                 <p>
-                  Градиентный стиль бренда + медицинская эстетика: свет, аккуратные формы, прозрачные карточки
-                  и понятная навигация по филиалам.
+                  Плановое и срочное лечение, имплантация, ортодонтия и детский приём в одной сети.
+                  Врачи составляют персональный план, объясняют этапы и сопровождают пациента до результата.
                 </p>
               </div>
             </div>
@@ -167,9 +167,6 @@ export default function ElstomLanding() {
                 <article key={branch.id} className="elstom-branch-card">
                   <div className="elstom-branch-card__top">
                     <h3>{branch.title}</h3>
-                    <span className={branch.isConfirmedInSources ? 'is-confirmed' : 'is-partial'}>
-                      {branch.isConfirmedInSources ? 'подтверждено' : 'частично подтверждено'}
-                    </span>
                   </div>
 
                   <p className="elstom-branch-card__address">{branch.address}</p>
@@ -200,11 +197,31 @@ export default function ElstomLanding() {
 
             <div className="elstom-map-scheme" aria-label="Схема филиалов">
               <div className="elstom-map-scheme__surface" />
+              <div className="elstom-map-scheme__head">
+                <h3>Схема филиалов Elstom</h3>
+                <p>Нажмите на точку филиала, чтобы сразу открыть контакты, услуги и маршрут.</p>
+                <div className="elstom-map-legend">
+                  <span>
+                    <i className="is-round-clock" />
+                    Круглосуточно
+                  </span>
+                  <span>
+                    <i className="is-appointment" />
+                    По предварительной записи
+                  </span>
+                </div>
+              </div>
+              <div className="elstom-map-hub">
+                <strong>Центр маршрутизации</strong>
+                <small>Быстрый выбор филиала по локации и режиму работы</small>
+              </div>
               {BRANCHES.map((branch, index) => (
                 <button
                   key={branch.id}
                   type="button"
-                  className={`elstom-map-node elstom-map-node--${index + 1}`}
+                  className={`elstom-map-node elstom-map-node--${index + 1} ${
+                    branch.hours === 'Круглосуточно' ? 'is-round-clock' : 'is-appointment'
+                  }`}
                   onClick={() => openBranchById(branch.id)}
                 >
                   <span className="dot" />
