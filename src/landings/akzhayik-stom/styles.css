@@ -186,9 +186,47 @@
   background: rgba(255, 255, 255, 0.86);
 }
 
+.ak-btn--instagram {
+  color: #fff !important;
+  border-color: rgba(255, 255, 255, 0.36);
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  box-shadow: 0 20px 48px -20px rgba(193, 53, 132, 0.72);
+}
+
+.ak-btn--instagram svg,
+.ak-btn--instagram span {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  fill: currentColor;
+}
+
+.ak-btn--twogis {
+  color: #043b34;
+  border-color: rgba(18, 197, 143, 0.34);
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.72), transparent 24%),
+    linear-gradient(135deg, #65f0a9 0%, #24d18d 48%, #00b7c7 100%);
+  box-shadow: 0 20px 48px -20px rgba(0, 183, 199, 0.62);
+}
+
+.ak-2gis-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 8px;
+  color: #fff;
+  background: #08a652;
+  box-shadow: inset 0 -6px 12px rgba(0, 75, 48, 0.2);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: -0.08em;
+}
+
 .ak-btn--white {
-  color: var(--ak-green-3);
+  color: #0b2020;
   background: #fff;
+  border-color: rgba(11, 32, 32, 0.12);
   box-shadow: 0 18px 50px -26px rgba(1, 58, 53, 0.7);
 }
 
@@ -424,13 +462,73 @@
   inset: 90px 18px 94px;
   display: grid;
   place-items: center;
+  overflow: hidden;
 }
 
-.ak-tooth {
-  width: min(86%, 380px);
-  height: auto;
-  filter: drop-shadow(0 34px 52px rgba(5, 168, 137, 0.35));
-  animation: akFloat 5.4s ease-in-out infinite;
+.ak-orb-scene {
+  position: relative;
+  width: min(100%, 360px);
+  height: min(100%, 330px);
+  display: grid;
+  place-items: center;
+}
+
+.ak-orb-glow {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(166, 255, 237, 0.42) 0%, rgba(166, 255, 237, 0) 65%);
+  animation: akOrbGlow 3.4s ease-in-out infinite;
+  z-index: 0;
+}
+
+.ak-orb-core {
+  position: relative;
+  width: 210px;
+  height: 210px;
+  border-radius: 50%;
+  z-index: 2;
+  border: 1px solid rgba(176, 214, 207, 0.7);
+  background:
+    radial-gradient(circle at 30% 22%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.2) 42%, rgba(255, 255, 255, 0) 64%),
+    linear-gradient(150deg, #f9ffff 0%, #ddf2ef 54%, #c8e8e2 100%);
+  box-shadow:
+    inset 0 16px 26px rgba(255, 255, 255, 0.72),
+    inset 0 -18px 26px rgba(158, 196, 190, 0.35),
+    0 24px 50px rgba(5, 168, 137, 0.34);
+  animation: akOrbBreathe 5.8s ease-in-out infinite;
+}
+
+.ak-orb-cross {
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  z-index: 3;
+  animation: akCrossFloat 4.6s ease-in-out infinite;
+}
+
+.ak-orb-cross::before,
+.ak-orb-cross::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 14px;
+  background: linear-gradient(180deg, #0f8f7b, #12b69b);
+  box-shadow: 0 0 18px rgba(18, 182, 155, 0.38);
+}
+
+.ak-orb-cross::before {
+  width: 20px;
+  height: 72px;
+}
+
+.ak-orb-cross::after {
+  width: 72px;
+  height: 20px;
 }
 
 .ak-tooth-ring {
@@ -451,14 +549,99 @@
   animation-delay: -2.2s;
 }
 
-@keyframes akFloat {
-  0%, 100% { transform: translateY(0) rotate(-2deg); }
-  50% { transform: translateY(-16px) rotate(2deg); }
+@keyframes akOrbBreathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+@keyframes akOrbGlow {
+  0%, 100% { opacity: 0.58; transform: scale(0.92); }
+  50% { opacity: 1; transform: scale(1.08); }
 }
 
 @keyframes akPulse {
   0%, 100% { opacity: 0.28; transform: scale(0.95); }
   50% { opacity: 0.8; transform: scale(1.04); }
+}
+
+.ak-orb-satellite {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  margin: -9px;
+  border-radius: 50%;
+  z-index: 4;
+  background: radial-gradient(circle, #ffffff 0%, #95e8d8 62%, rgba(149, 232, 216, 0) 100%);
+  box-shadow: 0 0 16px rgba(149, 232, 216, 0.86);
+}
+
+.ak-orb-satellite--one {
+  animation: akSatelliteOne 6.2s linear infinite;
+}
+
+.ak-orb-satellite--two {
+  width: 14px;
+  height: 14px;
+  margin: -7px;
+  animation: akSatelliteTwo 8.4s linear infinite reverse;
+}
+
+.ak-orb-satellite--three {
+  width: 12px;
+  height: 12px;
+  margin: -6px;
+  animation: akSatelliteThree 10.6s linear infinite;
+}
+
+.ak-orb-wave {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  border: 1px dashed rgba(18, 182, 155, 0.3);
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.ak-orb-wave--one {
+  width: 264px;
+  height: 264px;
+  animation: akWaveRotate 14s linear infinite;
+}
+
+.ak-orb-wave--two {
+  width: 300px;
+  height: 300px;
+  border-style: solid;
+  border-color: rgba(18, 182, 155, 0.17);
+  animation: akWaveRotate 18s linear infinite reverse;
+}
+
+@keyframes akCrossFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes akSatelliteOne {
+  from { transform: rotate(0deg) translateX(130px) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(130px) rotate(-360deg); }
+}
+
+@keyframes akSatelliteTwo {
+  from { transform: rotate(0deg) translateX(150px) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+}
+
+@keyframes akSatelliteThree {
+  from { transform: rotate(60deg) translateX(112px) rotate(-60deg); }
+  to { transform: rotate(420deg) translateX(112px) rotate(-420deg); }
+}
+
+@keyframes akWaveRotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 .ak-floating-note {
@@ -990,45 +1173,33 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  background:
-    linear-gradient(rgba(0, 109, 97, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 109, 97, 0.08) 1px, transparent 1px),
-    radial-gradient(circle at 50% 36%, rgba(30, 198, 170, 0.34), transparent 36%),
-    linear-gradient(135deg, #ecfff8, #ffffff);
-  background-size: 38px 38px, 38px 38px, auto, auto;
+  gap: 20px;
+  background: linear-gradient(135deg, #ecfff8, #ffffff);
 }
 
-.ak-map-card::before {
-  content: '';
-  position: absolute;
-  inset: 58px 52px auto auto;
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, rgba(248, 216, 107, 0.5), rgba(30, 198, 170, 0.2));
-  filter: blur(6px);
+.ak-map-card__frame-wrap {
+  width: 100%;
+  height: 270px;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 1px solid rgba(5, 168, 137, 0.18);
+  background: linear-gradient(135deg, #dff6ef, #e7fff7);
+  display: block;
+  position: relative;
 }
 
-.ak-map-card__pin {
-  position: absolute;
-  left: 50%;
-  top: 36%;
-  display: grid;
-  place-items: center;
-  width: 82px;
-  height: 82px;
-  border-radius: 50%;
-  color: #fff;
-  background: linear-gradient(135deg, var(--ak-green-3), var(--ak-green));
-  box-shadow: 0 22px 60px -16px rgba(5, 168, 137, 0.8);
-  transform: translate(-50%, -50%);
+.ak-map-card__frame-wrap img {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: cover;
+  display: block;
 }
 
 .ak-map-card h3,
 .ak-map-card p,
 .ak-map-card a {
-  position: relative;
-  z-index: 1;
+  position: static;
 }
 
 .ak-map-card h3 {
@@ -1042,6 +1213,12 @@
   color: var(--ak-green-3);
   font-weight: 900;
   text-decoration: none;
+}
+
+.ak-map-card__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .ak-footer {
@@ -1224,6 +1401,7 @@
     padding-inline: 12px;
     white-space: normal;
     text-align: center;
+    font-size: 14px;
   }
 
   .ak-hero__meta,
@@ -1245,6 +1423,26 @@
     min-height: 520px;
     border-radius: 32px;
     padding: 22px;
+  }
+
+  .ak-orb-scene {
+    width: min(100%, 360px);
+    height: min(100%, 310px);
+  }
+
+  .ak-orb-core {
+    width: 186px;
+    height: 186px;
+  }
+
+  .ak-orb-wave--one {
+    width: 236px;
+    height: 236px;
+  }
+
+  .ak-orb-wave--two {
+    width: 272px;
+    height: 272px;
   }
 
   .ak-floating-note {
@@ -1333,10 +1531,6 @@
     min-width: 136px;
   }
 
-  .ak-hero__cta {
-    grid-template-columns: 1fr;
-  }
-
   .ak-hero__logo-row {
     align-items: center;
   }
@@ -1348,6 +1542,41 @@
 
   .ak-visual-card {
     min-height: 460px;
+  }
+
+  .ak-orb-scene {
+    width: min(100%, 300px);
+    height: min(100%, 270px);
+  }
+
+  .ak-orb-core {
+    width: 154px;
+    height: 154px;
+  }
+
+  .ak-orb-cross {
+    width: 58px;
+    height: 58px;
+  }
+
+  .ak-orb-cross::before {
+    height: 58px;
+    width: 16px;
+  }
+
+  .ak-orb-cross::after {
+    width: 58px;
+    height: 16px;
+  }
+
+  .ak-orb-wave--one {
+    width: 200px;
+    height: 200px;
+  }
+
+  .ak-orb-wave--two {
+    width: 234px;
+    height: 234px;
   }
 
   .ak-floating-note {

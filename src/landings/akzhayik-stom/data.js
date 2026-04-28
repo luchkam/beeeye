@@ -16,6 +16,12 @@ export const WHATSAPP_URL = 'https://wa.me/77072650076';
 export const INSTAGRAM_URL = 'https://www.instagram.com/akzhayik_stom';
 export const TWO_GIS_URL = 'https://2gis.kz/astana/firm/70000001032742729?m=71.442309%2C51.095625%2F16';
 export const TWO_GIS_ROUTE_URL = 'https://2gis.kz/astana/directions/points/%7C71.442309%2C51.095625%3B70000001032742729';
+export const MAP_EMBED_URL =
+  'https://yandex.kz/map-widget/v1/?ll=71.442309%2C51.095625&mode=search&pt=71.442309%2C51.095625%2Cpm2rdm&text=%D0%90%D1%81%D1%82%D0%B0%D0%BD%D0%B0%2C%20%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82%20%D0%A3%D0%BB%D1%8B%20%D0%94%D0%B0%D0%BB%D0%B0%2065%2F1&z=16';
+export const MAP_IMAGE_URL =
+  'https://static-maps.yandex.ru/1.x/?lang=ru_RU&ll=71.442309,51.095625&z=16&size=650,300&l=map&pt=71.442309,51.095625,pm2rdm';
+export const YANDEX_MAP_URL =
+  'https://yandex.kz/maps/?ll=71.442309%2C51.095625&mode=search&text=%D0%90%D1%81%D1%82%D0%B0%D0%BD%D0%B0%2C%20%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82%20%D0%A3%D0%BB%D1%8B%20%D0%94%D0%B0%D0%BB%D0%B0%2C%2065%2F1&z=16';
 
 export const PHONES = [
   '+7 777 109 26 13',
@@ -111,12 +117,12 @@ export const PRICES = [
   {
     title: 'Плазмолифтинг',
     price: '10 000 ₸',
-    note: 'Цена из карточки 2GIS, обновление указано 22.07.2024.',
+    note: 'Цена из карточки 2GIS.',
   },
   {
     title: 'Удаление зуба по пятничной акции',
     price: '9 900 ₸',
-    note: 'Акция указана в карточке 2GIS. Актуальность лучше уточнить перед записью.',
+    note: 'Акция указана в карточке 2GIS.',
   },
   {
     title: 'Имплантация / ортопедия / диагностика',

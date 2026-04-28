@@ -24,6 +24,8 @@ import {
   REVIEW_THEMES,
   SERVICES,
   TRUST_STATS,
+  MAP_IMAGE_URL,
+  YANDEX_MAP_URL,
   TWO_GIS_ROUTE_URL,
   TWO_GIS_URL,
   WHATSAPP_URL,
@@ -144,30 +146,25 @@ function Hero({ reduceMotion }) {
             Лечение, детский приём, имплантация, ортопедия и диагностика в Астане. Страница собрана как премиальная витрина клиники, чтобы пациент быстро выбрал удобный способ записи.
           </p>
           <div className="ak-hero__cta" aria-label="Основные действия">
-            <a className="ak-btn ak-btn--primary" href={`tel:${PHONE_PRIMARY_TEL}`}>
-              <IconPhone /> Позвонить
-            </a>
-            <a className="ak-btn ak-btn--whatsapp" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-              <IconWhatsApp /> WhatsApp
-            </a>
-            <a className="ak-btn ak-btn--ghost" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
+            <a className="ak-btn ak-btn--instagram" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
               <IconInstagram /> Instagram
             </a>
-            <a className="ak-btn ak-btn--ghost" href={TWO_GIS_ROUTE_URL} target="_blank" rel="noopener noreferrer">
-              <IconRoute /> Маршрут
+            <a className="ak-btn ak-btn--twogis" href={TWO_GIS_ROUTE_URL} target="_blank" rel="noopener noreferrer">
+              <span className="ak-2gis-mark" aria-hidden="true">2Г</span>
+              Маршрут в 2GIS
             </a>
           </div>
           <div className="ak-hero__meta">
             {RATINGS.map((rating) => (
               <div key={rating.label}>
-                <strong>{rating.value}</strong>
+                <strong>Рейтинг {rating.value}</strong>
                 <span>{rating.label}</span>
                 <small>{rating.sub}</small>
               </div>
             ))}
             <div>
-              <strong>09-21</strong>
-              <span>каждый день</span>
+              <strong>Работаем с 09:00 до 21:00</strong>
+              <span>ежедневно</span>
               <small>{ADDRESS_SHORT}</small>
             </div>
           </div>
@@ -182,7 +179,20 @@ function Hero({ reduceMotion }) {
             <div className="ak-tooth-stage" aria-hidden="true">
               {!reduceMotion && <span className="ak-tooth-ring ak-tooth-ring--one" />}
               {!reduceMotion && <span className="ak-tooth-ring ak-tooth-ring--two" />}
-              <ToothGraphic />
+              <div className="ak-orb-scene">
+                <span className="ak-orb-glow" />
+                <span className="ak-orb-core" />
+                <span className="ak-orb-cross" />
+                {!reduceMotion && (
+                  <>
+                    <span className="ak-orb-satellite ak-orb-satellite--one" />
+                    <span className="ak-orb-satellite ak-orb-satellite--two" />
+                    <span className="ak-orb-satellite ak-orb-satellite--three" />
+                    <span className="ak-orb-wave ak-orb-wave--one" />
+                    <span className="ak-orb-wave ak-orb-wave--two" />
+                  </>
+                )}
+              </div>
             </div>
             <div className="ak-floating-note ak-floating-note--left">
               <strong>4.8</strong>
@@ -226,7 +236,6 @@ function Benefits() {
         <SectionIntro
           eyebrow="Почему выбирают"
           title="Не просто стоматология рядом, а понятный маршрут лечения"
-          text="Показываем сильные стороны клиники через подтверждённые данные: семейный формат, опыт врачей, детский приём и восстановление зубов."
         />
         <motion.div className="ak-benefits" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={stagger}>
           {BENEFITS.map((item, index) => (
@@ -292,7 +301,6 @@ function Services() {
         <SectionIntro
           eyebrow="Услуги"
           title="Основные направления клиники"
-          text="В лендинг вынесены подтверждённые направления из 103.kz и публичной карточки клиники."
         />
         <div className="ak-service-grid">
           {SERVICES.map((service) => (
@@ -318,12 +326,6 @@ function Prices() {
         <div>
           <p className="ak-eyebrow">Цены</p>
           <h2>Показываем только подтверждённые позиции</h2>
-          <p>
-            Данных по полному прайсу мало, поэтому остальное оформлено как консультационные услуги. Точную стоимость нужно уточнять в клинике.
-          </p>
-          <a className="ak-btn ak-btn--white" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-            <IconWhatsApp /> Узнать стоимость
-          </a>
         </div>
         <div className="ak-price-list">
           {PRICES.map((item) => (
@@ -348,7 +350,6 @@ function Doctors() {
         <SectionIntro
           eyebrow="Специалисты"
           title="Ведущие врачи с подтверждённым стажем"
-          text="Карточки включают только данные, которые удалось подтвердить в открытых источниках."
         />
         <div className="ak-doctor-grid">
           {DOCTORS.map((doctor) => (
@@ -380,9 +381,6 @@ function Reviews() {
         <div>
           <p className="ak-eyebrow">Доверие</p>
           <h2>Рейтинги в каталогах и смысловые выжимки отзывов</h2>
-          <p>
-            Длинные отзывы не копируем. Используем краткие обобщения публичных отзывов: аккуратность, детский подход, хирургический опыт и вежливый сервис.
-          </p>
         </div>
         <div className="ak-rating-panel">
           {RATINGS.map((rating) => (
@@ -424,15 +422,20 @@ function Contacts() {
           <div className="ak-contact-actions">
             <a className="ak-btn ak-btn--primary" href={`tel:${PHONE_PRIMARY_TEL}`}><IconPhone /> Позвонить</a>
             <a className="ak-btn ak-btn--whatsapp" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"><IconWhatsApp /> WhatsApp</a>
-            <a className="ak-btn ak-btn--ghost-light" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer"><IconInstagram /> Instagram</a>
-            <a className="ak-btn ak-btn--ghost-light" href={TWO_GIS_ROUTE_URL} target="_blank" rel="noopener noreferrer"><IconRoute /> Построить маршрут</a>
+            <a className="ak-btn ak-btn--instagram" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer"><IconInstagram /> Instagram</a>
+            <a className="ak-btn ak-btn--ghost-light" href={TWO_GIS_ROUTE_URL} target="_blank" rel="noopener noreferrer"><span className="ak-2gis-mark" aria-hidden="true">2Г</span> Построить маршрут в 2GIS</a>
           </div>
         </div>
         <div className="ak-map-card">
-          <div className="ak-map-card__pin"><IconRoute /></div>
+          <a className="ak-map-card__frame-wrap" href={TWO_GIS_ROUTE_URL} target="_blank" rel="noopener noreferrer" aria-label="Открыть карту и маршрут в 2GIS">
+            <img src={MAP_IMAGE_URL} alt="Карта района проспекта Улы Дала, 65/1" loading="lazy" />
+          </a>
           <h3>{ADDRESS_SHORT}</h3>
           <p>{DISTRICT} район, {CITY}</p>
-          <a href={TWO_GIS_ROUTE_URL} target="_blank" rel="noopener noreferrer">Открыть маршрут в 2GIS</a>
+          <div className="ak-map-card__links">
+            <a href={TWO_GIS_ROUTE_URL} target="_blank" rel="noopener noreferrer">Открыть маршрут в 2GIS</a>
+            <a href={YANDEX_MAP_URL} target="_blank" rel="noopener noreferrer">Открыть в Яндекс Картах</a>
+          </div>
         </div>
       </div>
     </section>
@@ -469,7 +472,7 @@ function SectionIntro({ eyebrow, title, text }) {
     <div className="ak-section-intro">
       <p className="ak-eyebrow">{eyebrow}</p>
       <h2>{title}</h2>
-      <p>{text}</p>
+      {text ? <p>{text}</p> : null}
     </div>
   );
 }
@@ -489,43 +492,6 @@ function ContactRow({ icon, title, text, href }) {
     return <a className="ak-contact-row" href={href} target={href.startsWith('http') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}>{body}</a>;
   }
   return <div className="ak-contact-row">{body}</div>;
-}
-
-function ToothGraphic() {
-  return (
-    <svg className="ak-tooth" viewBox="0 0 260 260" fill="none" aria-hidden="true">
-      <defs>
-        <linearGradient id="akToothGradient" x1="46" y1="21" x2="216" y2="235" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#EFFFFA" />
-          <stop offset="0.45" stopColor="#BFF6E8" />
-          <stop offset="1" stopColor="#23BFA4" />
-        </linearGradient>
-        <linearGradient id="akSmileGradient" x1="46" y1="156" x2="214" y2="156" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#04A889" />
-          <stop offset="1" stopColor="#19D0B1" />
-        </linearGradient>
-        <filter id="akGlow" x="0" y="0" width="260" height="260" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-          <feGaussianBlur stdDeviation="10" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-      </defs>
-      <path
-        d="M66 62C81 28 118 31 130 61C142 31 179 28 194 62C209 95 194 130 178 159C165 183 158 222 142 222C132 222 132 190 130 176C128 190 128 222 118 222C102 222 95 183 82 159C66 130 51 95 66 62Z"
-        fill="url(#akToothGradient)"
-        filter="url(#akGlow)"
-      />
-      <path
-        d="M47 144C68 169 99 182 130 182C161 182 192 169 213 144"
-        stroke="url(#akSmileGradient)"
-        strokeWidth="18"
-        strokeLinecap="round"
-      />
-      <path d="M83 66C94 46 118 48 130 74C142 48 166 46 177 66" stroke="white" strokeOpacity="0.8" strokeWidth="8" strokeLinecap="round" />
-    </svg>
-  );
 }
 
 function IconPhone() {
