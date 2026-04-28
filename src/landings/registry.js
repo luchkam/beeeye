@@ -4,11 +4,16 @@
 //   2. Import it here and add to landingRegistry under its URL slug.
 
 import ZygomaCenterLanding from './zygoma-center/ZygomaCenterLanding.jsx';
+import AkzhayikStomLanding from './akzhayik-stom/AkzhayikStomLanding.jsx';
 
 const landingRegistry = {
   'zygoma-center': {
     Component: ZygomaCenterLanding,
     title: 'Zygoma Center by dr. Utegenov',
+  },
+  'akzhayik-stom': {
+    Component: AkzhayikStomLanding,
+    title: 'Стоматология Акжайык',
   },
 };
 
