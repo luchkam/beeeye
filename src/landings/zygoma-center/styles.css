@@ -1,0 +1,551 @@
+/* Scoped styles for the Zygoma Center landing page.
+   Brand palette pulled from the real logo: deep royal navy + crisp white + warm gold. */
+
+.zygoma-root {
+  --zg-navy: #0a1740;
+  --zg-navy-deep: #050c28;
+  --zg-navy-soft: #142255;
+  --zg-navy-line: #1c2a63;
+  --zg-gold: #d4af6f;
+  --zg-gold-2: #ecc88a;
+  --zg-gold-deep: #a98545;
+  --zg-ivory: #f5efe1;
+  --zg-ivory-2: #ece4d2;
+  --zg-text: #e8eaf2;
+  --zg-text-soft: rgba(232, 234, 242, 0.7);
+  --zg-text-muted: rgba(232, 234, 242, 0.5);
+  --zg-line: rgba(255, 255, 255, 0.08);
+  --zg-line-strong: rgba(255, 255, 255, 0.16);
+
+  background: var(--zg-navy-deep);
+  color: var(--zg-text);
+  font-family: 'Manrope', 'Inter', 'SF Pro Display', system-ui, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'ss01', 'cv11';
+  letter-spacing: -0.005em;
+}
+
+.zygoma-root * { box-sizing: border-box; }
+
+.zygoma-root .zg-display {
+  font-family: 'Playfair Display', 'Cormorant Garamond', 'Times New Roman', serif;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.zygoma-root .zg-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--zg-gold);
+}
+.zygoma-root .zg-eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--zg-gold);
+  display: inline-block;
+}
+
+.zygoma-root .zg-container {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+@media (min-width: 768px) { .zygoma-root .zg-container { padding-inline: 40px; } }
+
+/* ===== Scroll progress bar ===== */
+.zygoma-root .zg-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--zg-gold-2), var(--zg-gold-deep));
+  z-index: 60;
+  transform-origin: 0 50%;
+  pointer-events: none;
+  box-shadow: 0 0 12px rgba(212, 175, 111, 0.6);
+}
+
+/* ===== Cursor follower (desktop only) ===== */
+.zygoma-root .zg-cursor {
+  position: fixed;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(circle, rgba(212, 175, 111, 0.16) 0%, transparent 65%);
+  transform: translate(-50%, -50%);
+  transition: opacity .3s;
+  mix-blend-mode: screen;
+  display: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .zygoma-root .zg-cursor { display: block; }
+}
+
+/* ===== Hero ===== */
+.zygoma-root .zg-hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(900px 500px at 80% 10%, rgba(212, 175, 111, 0.18), transparent 60%),
+    radial-gradient(700px 500px at -10% 70%, rgba(20, 34, 85, 0.85), transparent 60%),
+    linear-gradient(180deg, #0a1740 0%, #050c28 100%);
+}
+
+.zygoma-root .zg-stars {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.5) 50%, transparent 51%),
+    radial-gradient(1px 1px at 70% 60%, rgba(255,255,255,0.4) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 35% 80%, rgba(212,175,111,0.6) 50%, transparent 51%),
+    radial-gradient(1px 1px at 85% 25%, rgba(255,255,255,0.45) 50%, transparent 51%),
+    radial-gradient(1px 1px at 15% 65%, rgba(212,175,111,0.5) 50%, transparent 51%),
+    radial-gradient(1px 1px at 55% 15%, rgba(255,255,255,0.45) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 92% 78%, rgba(212,175,111,0.55) 50%, transparent 51%);
+  background-size: 100% 100%;
+  pointer-events: none;
+  opacity: .6;
+  animation: zgTwinkle 7s ease-in-out infinite;
+}
+@keyframes zgTwinkle {
+  0%, 100% { opacity: .35; }
+  50%      { opacity: .8; }
+}
+
+.zygoma-root .zg-hero-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  mix-blend-mode: screen;
+  animation: zgFloat 18s ease-in-out infinite;
+}
+.zygoma-root .zg-hero-glow.gold {
+  width: 520px; height: 520px;
+  top: -160px; right: -100px;
+  background: radial-gradient(circle, rgba(212, 175, 111, 0.5) 0%, transparent 70%);
+}
+.zygoma-root .zg-hero-glow.blue {
+  width: 460px; height: 460px;
+  bottom: -180px; left: -120px;
+  background: radial-gradient(circle, rgba(70, 110, 220, 0.45) 0%, transparent 70%);
+  animation-delay: -7s;
+}
+
+@keyframes zgFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(40px, -20px) scale(1.05); }
+  66%      { transform: translate(-30px, 30px) scale(0.97); }
+}
+
+.zygoma-root .zg-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='3'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.6'/></svg>");
+}
+
+/* Logo SVG drawing animation */
+.zygoma-root .zg-logo-stroke {
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  animation: zgDraw 2.4s cubic-bezier(0.65, 0, 0.35, 1) 0.2s forwards;
+}
+.zygoma-root .zg-logo-fill {
+  opacity: 0;
+  animation: zgFadeIn 1s ease 1.6s forwards;
+}
+@keyframes zgDraw  { to { stroke-dashoffset: 0; } }
+@keyframes zgFadeIn { to { opacity: 1; } }
+
+.zygoma-root .zg-logo-orbit {
+  animation: zgSpin 28s linear infinite;
+  transform-origin: center;
+}
+@keyframes zgSpin { to { transform: rotate(360deg); } }
+
+/* ===== Buttons ===== */
+.zygoma-root .zg-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px 24px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'Manrope', sans-serif;
+  letter-spacing: 0.005em;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  user-select: none;
+  min-height: 52px;
+  max-width: 100%;
+  transition: transform .25s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease, color .25s ease;
+  overflow: hidden;
+  isolation: isolate;
+}
+@media (max-width: 480px) {
+  .zygoma-root .zg-btn { white-space: normal; text-align: center; line-height: 1.25; }
+}
+.zygoma-root .zg-btn:active { transform: translateY(1px); }
+
+.zygoma-root .zg-btn-primary {
+  background: linear-gradient(180deg, var(--zg-gold-2) 0%, var(--zg-gold) 60%, var(--zg-gold-deep) 100%);
+  color: #1a1208;
+  box-shadow: 0 14px 40px -10px rgba(212, 175, 111, 0.55), inset 0 1px 0 rgba(255,255,255,0.4);
+}
+.zygoma-root .zg-btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.55) 50%, transparent 70%);
+  transform: translateX(-110%);
+  transition: transform .8s ease;
+  z-index: 0;
+}
+.zygoma-root .zg-btn-primary:hover::before { transform: translateX(110%); }
+.zygoma-root .zg-btn-primary:hover {
+  box-shadow: 0 22px 60px -10px rgba(212, 175, 111, 0.7), inset 0 1px 0 rgba(255,255,255,0.45);
+}
+.zygoma-root .zg-btn-primary > * { position: relative; z-index: 1; }
+
+.zygoma-root .zg-btn-ghost {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: var(--zg-text);
+  backdrop-filter: blur(8px);
+}
+.zygoma-root .zg-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--zg-gold);
+  color: var(--zg-gold-2);
+}
+
+.zygoma-root .zg-btn-wa {
+  background: #25d366;
+  color: #06291b;
+  box-shadow: 0 14px 40px -10px rgba(37, 211, 102, 0.5);
+}
+.zygoma-root .zg-btn-wa:hover { background: #1ebe5a; }
+
+.zygoma-root .zg-btn-outline-gold {
+  background: transparent;
+  border-color: var(--zg-gold);
+  color: var(--zg-gold-2);
+}
+.zygoma-root .zg-btn-outline-gold:hover {
+  background: rgba(212, 175, 111, 0.1);
+  color: var(--zg-gold-2);
+}
+
+/* ===== Sections ===== */
+.zygoma-root .zg-section {
+  position: relative;
+  padding: 100px 0;
+}
+@media (min-width: 768px) { .zygoma-root .zg-section { padding: 130px 0; } }
+
+.zygoma-root .zg-section-light {
+  background: var(--zg-ivory);
+  color: #15224b;
+}
+.zygoma-root .zg-section-light .zg-eyebrow { color: var(--zg-gold-deep); }
+.zygoma-root .zg-section-light .zg-eyebrow::before { background: var(--zg-gold-deep); }
+
+/* ===== Marquee ===== */
+.zygoma-root .zg-marquee {
+  background: var(--zg-navy);
+  border-block: 1px solid var(--zg-line);
+  overflow: hidden;
+  position: relative;
+}
+.zygoma-root .zg-marquee::before,
+.zygoma-root .zg-marquee::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 80px;
+  z-index: 2;
+  pointer-events: none;
+}
+.zygoma-root .zg-marquee::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--zg-navy), transparent);
+}
+.zygoma-root .zg-marquee::after {
+  right: 0;
+  background: linear-gradient(-90deg, var(--zg-navy), transparent);
+}
+.zygoma-root .zg-marquee-track {
+  display: flex;
+  gap: 64px;
+  padding: 24px 0;
+  animation: zgMarquee 40s linear infinite;
+  width: max-content;
+}
+.zygoma-root .zg-marquee-item {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 3vw, 38px);
+  font-style: italic;
+  color: var(--zg-text);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 64px;
+}
+.zygoma-root .zg-marquee-item::after {
+  content: '✦';
+  color: var(--zg-gold);
+  font-size: 0.6em;
+  font-style: normal;
+}
+@keyframes zgMarquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ===== Cards ===== */
+.zygoma-root .zg-card {
+  background: linear-gradient(180deg, rgba(20, 34, 85, 0.55) 0%, rgba(10, 23, 64, 0.55) 100%);
+  border: 1px solid var(--zg-line);
+  border-radius: 24px;
+  padding: 32px 28px;
+  transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease, background .35s ease;
+  backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
+}
+.zygoma-root .zg-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(400px 200px at var(--mx, 50%) var(--my, 50%), rgba(212, 175, 111, 0.16), transparent 60%);
+  opacity: 0;
+  transition: opacity .35s ease;
+  pointer-events: none;
+}
+.zygoma-root .zg-card:hover {
+  border-color: rgba(212, 175, 111, 0.45);
+  box-shadow: 0 30px 70px -30px rgba(212, 175, 111, 0.4);
+}
+.zygoma-root .zg-card:hover::before { opacity: 1; }
+
+.zygoma-root .zg-card-accent {
+  background: linear-gradient(180deg, rgba(212, 175, 111, 0.18) 0%, rgba(20, 34, 85, 0.55) 70%);
+  border-color: rgba(212, 175, 111, 0.4);
+}
+
+.zygoma-root .zg-card-light {
+  background: #fff;
+  border: 1px solid rgba(10, 23, 64, 0.1);
+  color: #15224b;
+  border-radius: 24px;
+  padding: 32px 28px;
+  transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+}
+.zygoma-root .zg-card-light:hover {
+  border-color: rgba(212, 175, 111, 0.6);
+  transform: translateY(-4px);
+  box-shadow: 0 30px 60px -30px rgba(10, 23, 64, 0.25);
+}
+
+/* ===== Pricing ===== */
+.zygoma-root .zg-price-card {
+  background: rgba(20, 34, 85, 0.4);
+  border: 1px solid var(--zg-line);
+  border-radius: 28px;
+  padding: 36px 32px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+}
+.zygoma-root .zg-price-card.is-highlight {
+  background: linear-gradient(160deg, var(--zg-gold) 0%, var(--zg-gold-deep) 100%);
+  color: #1a1208;
+  border-color: rgba(212, 175, 111, 0.6);
+}
+.zygoma-root .zg-price-card.is-highlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(400px 200px at 100% 0%, rgba(255, 255, 255, 0.35), transparent 60%);
+  pointer-events: none;
+}
+
+/* ===== Trust ribbon ===== */
+.zygoma-root .zg-trust {
+  background: var(--zg-navy-deep);
+  border-block: 1px solid var(--zg-line);
+}
+
+/* ===== Step cards ===== */
+.zygoma-root .zg-step {
+  position: relative;
+  padding: 36px 28px 28px;
+  border: 1px solid var(--zg-line);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.02);
+  transition: border-color .3s ease, transform .3s ease;
+}
+.zygoma-root .zg-step:hover {
+  border-color: rgba(212, 175, 111, 0.45);
+  transform: translateY(-3px);
+}
+.zygoma-root .zg-step-num {
+  position: absolute;
+  top: -22px;
+  left: 24px;
+  font-family: 'Playfair Display', serif;
+  font-size: 56px;
+  font-style: italic;
+  background: linear-gradient(180deg, var(--zg-gold-2), var(--zg-gold-deep));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1;
+}
+
+/* ===== Social cards ===== */
+.zygoma-root .zg-social {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 22px;
+  border: 1px solid var(--zg-line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+  text-decoration: none;
+  color: var(--zg-text);
+  transition: border-color .3s ease, transform .3s ease, background .3s ease;
+}
+.zygoma-root .zg-social:hover {
+  border-color: var(--zg-gold);
+  transform: translateY(-3px);
+  background: rgba(212, 175, 111, 0.08);
+}
+.zygoma-root .zg-social-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+/* ===== Footer ===== */
+.zygoma-root .zg-footer {
+  background: var(--zg-navy-deep);
+  color: var(--zg-text-soft);
+  border-top: 1px solid var(--zg-line);
+}
+.zygoma-root .zg-footer a { color: var(--zg-text); text-decoration: none; transition: color .2s; }
+.zygoma-root .zg-footer a:hover { color: var(--zg-gold-2); }
+
+.zygoma-root .zg-disclaimer {
+  background: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid var(--zg-line);
+  border-bottom: 1px solid var(--zg-line);
+  font-size: 13px;
+  color: var(--zg-text-muted);
+  line-height: 1.55;
+}
+
+/* ===== Sticky mobile CTA bar ===== */
+.zygoma-root .zg-mobile-bar {
+  position: fixed;
+  left: 12px; right: 12px; bottom: 12px;
+  z-index: 50;
+  display: none;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 999px;
+  background: rgba(5, 12, 40, 0.92);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--zg-line-strong);
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.7);
+}
+.zygoma-root .zg-mobile-bar a {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 8px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.zygoma-root .zg-mobile-bar .zg-mb-call { background: linear-gradient(180deg, var(--zg-gold-2), var(--zg-gold-deep)); color: #1a1208; }
+.zygoma-root .zg-mobile-bar .zg-mb-wa   { background: #25d366; color: #06291b; }
+.zygoma-root .zg-mobile-bar .zg-mb-route{ background: rgba(255,255,255,0.06); color: var(--zg-text); }
+@media (max-width: 640px) {
+  .zygoma-root .zg-mobile-bar { display: flex; }
+  .zygoma-root .zg-mobile-bar-spacer { height: 92px; }
+}
+
+/* ===== Header ===== */
+.zygoma-root .zg-header {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 5;
+  padding-top: 22px;
+}
+
+.zygoma-root .zg-link {
+  color: var(--zg-gold-2);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(212, 175, 111, 0.4);
+  transition: color .2s, border-color .2s;
+}
+.zygoma-root .zg-link:hover { color: #fff; border-color: var(--zg-gold-2); }
+
+/* ===== Stat counters ===== */
+.zygoma-root .zg-big-num {
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  background: linear-gradient(180deg, #ffffff 0%, var(--zg-gold-2) 80%, var(--zg-gold) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ===== Mobile/desktop visibility helpers ===== */
+@media (max-width: 640px) {
+  .zygoma-root .zg-hide-mobile { display: none !important; }
+  .zygoma-root .zg-hide-mobile-inline { display: none !important; }
+}
+@media (min-width: 641px) {
+  .zygoma-root .zg-show-mobile-inline { display: none !important; }
+}
+
+/* Section intro fade */
+.zygoma-root .zg-fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .9s cubic-bezier(0.22, 1, 0.36, 1), transform .9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.zygoma-root .zg-fade-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}

@@ -1,17 +1,16 @@
-// Registry for future company landing pages.
-// Add entries here when a new landing is implemented.
-//
-// Example:
-// import ZygomaCenterLanding from './zygoma-center/ZygomaCenterLanding.jsx';
-//
-// const landingRegistry = {
-//   'zygoma-center': {
-//     Component: ZygomaCenterLanding,
-//     title: 'Zygoma Center',
-//   },
-// };
+// Registry for company landing pages.
+// To add a new landing:
+//   1. Create src/landings/<slug>/<Component>.jsx
+//   2. Import it here and add to landingRegistry under its URL slug.
 
-const landingRegistry = {};
+import ZygomaCenterLanding from './zygoma-center/ZygomaCenterLanding.jsx';
+
+const landingRegistry = {
+  'zygoma-center': {
+    Component: ZygomaCenterLanding,
+    title: 'Zygoma Center by dr. Utegenov',
+  },
+};
 
 export function normalizePathToSlug(pathname = '/') {
   const cleaned = String(pathname || '/').split('?')[0].split('#')[0];
