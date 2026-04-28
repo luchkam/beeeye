@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import './styles.css';
+import zygomaLogo from './assets/zygoma-logo.jpg';
 import {
   PHONE_DISPLAY,
   PHONE_TEL,
@@ -118,9 +119,6 @@ function useCursorFollower() {
    ========================= */
 function BrandLogo({ size = 56, light = true, drawStroke = false }) {
   const stroke = light ? '#ffffff' : '#0a1740';
-  // Stylized Z that simultaneously reads as a tooth silhouette.
-  // Top: two crown bumps (Z's top horizontal). Middle: diagonal Z stroke.
-  // Bottom: two root curves (Z's bottom horizontal).
   return (
     <svg
       width={size}
@@ -136,28 +134,15 @@ function BrandLogo({ size = 56, light = true, drawStroke = false }) {
         strokeLinejoin="round"
         fill="none"
       >
-        {/* Top crown — two bumps forming the upper edge of the Z and tooth crown */}
+        {/* Z letterform: left cusp arch → Z top → Z diagonal → Z bottom → left root */}
         <path
           className={drawStroke ? 'zg-logo-stroke' : ''}
-          d="
-            M 52 58
-            C 60 28, 96 28, 100 58
-            C 104 28, 140 28, 148 58
-          "
+          d="M 82,68 C 74,52 54,36 54,22 C 54,10 72,10 78,28 C 80,36 82,54 82,68 L 118,68 L 82,112 L 118,112 M 82,112 C 76,126 66,144 60,168"
         />
-        {/* Diagonal Z stroke — flows from top-right toward bottom-left */}
+        {/* Right cusp (C) forming the ZC tooth mark + right root */}
         <path
           className={drawStroke ? 'zg-logo-stroke' : ''}
-          d="M 148 58 C 130 90, 70 110, 52 142"
-        />
-        {/* Bottom roots — two pointed root curves forming Z's bottom horizontal */}
-        <path
-          className={drawStroke ? 'zg-logo-stroke' : ''}
-          d="
-            M 52 142
-            C 60 175, 92 175, 100 150
-            C 108 175, 140 175, 148 142
-          "
+          d="M 118,68 C 118,52 128,18 146,24 C 154,32 150,54 140,68 M 118,112 C 124,126 134,144 140,168"
         />
       </g>
     </svg>
@@ -167,9 +152,36 @@ function BrandLogo({ size = 56, light = true, drawStroke = false }) {
 function LogoLockup({ light = true, compact = false }) {
   const main = light ? '#ffffff' : '#0a1740';
   const sub = light ? 'rgba(232,234,242,0.6)' : 'rgba(10, 23, 64, 0.55)';
+  const markSize = compact ? 38 : 46;
   return (
     <div className="zg-logo-lockup" style={{ display: 'inline-flex', alignItems: 'center', gap: compact ? 12 : 14 }}>
-      <BrandLogo size={compact ? 38 : 46} light={light} />
+      <span
+        className="zg-logo-mark"
+        style={{
+          width: markSize,
+          height: markSize,
+          borderRadius: 10,
+          overflow: 'hidden',
+          flexShrink: 0,
+          display: 'inline-flex',
+          background: '#0f2f88',
+          border: '1px solid rgba(255,255,255,0.22)',
+          boxShadow: light ? '0 8px 24px rgba(5, 12, 40, 0.45)' : '0 8px 18px rgba(10, 23, 64, 0.22)',
+        }}
+      >
+        <img
+          src={zygomaLogo}
+          alt="Zygoma Center logo"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center top',
+            transform: 'scale(1.18)',
+            transformOrigin: 'center 24%',
+          }}
+        />
+      </span>
       <div style={{ lineHeight: 1.05, whiteSpace: 'nowrap' }}>
         <div
           className="zg-logo-name"
@@ -194,14 +206,14 @@ function LogoLockup({ light = true, compact = false }) {
             color: sub,
           }}
         >
-          Dr. Utegenov
+          by dr. Utegenov
         </div>
       </div>
       <style>{`
         @media (max-width: 480px) {
           .zg-logo-lockup .zg-logo-name { font-size: 13px !important; letter-spacing: 0.14em !important; }
           .zg-logo-lockup .zg-logo-sub  { font-size: 10px !important; }
-          .zg-logo-lockup svg { width: 32px !important; height: 32px !important; }
+          .zg-logo-lockup .zg-logo-mark { width: 32px !important; height: 32px !important; }
         }
       `}</style>
     </div>
