@@ -6,6 +6,7 @@
 import ZygomaCenterLanding from './zygoma-center/ZygomaCenterLanding.jsx';
 import AkzhayikStomLanding from './akzhayik-stom/AkzhayikStomLanding.jsx';
 import LibertyStomLanding from './liberty-stom/LibertyStomLanding.jsx';
+import ElstomLanding from './elstom/ElstomLanding.jsx';
 
 const landingRegistry = {
   'zygoma-center': {
@@ -19,6 +20,10 @@ const landingRegistry = {
   'liberty-stom': {
     Component: LibertyStomLanding,
     title: 'Liberty Stom',
+  },
+  elstom: {
+    Component: ElstomLanding,
+    title: 'Elstom',
   },
 };
 

@@ -1,0 +1,930 @@
+.elstom-root {
+  --el-bg: #f8f9ff;
+  --el-card: rgba(255, 255, 255, 0.78);
+  --el-border: rgba(67, 95, 210, 0.25);
+  --el-text: #111a4a;
+  --el-muted: rgba(17, 26, 74, 0.7);
+  --el-blue: #4e6cff;
+  --el-violet: #8b63ff;
+  --el-pink: #f05bbf;
+  --el-cyan: #57d4ff;
+  --el-wa: #20cc65;
+
+  background:
+    radial-gradient(1100px 600px at 10% -10%, rgba(87, 212, 255, 0.24), transparent 60%),
+    radial-gradient(900px 520px at 100% 12%, rgba(240, 91, 191, 0.24), transparent 62%),
+    linear-gradient(180deg, #f7f8ff 0%, #f4f2ff 48%, #f7fbff 100%);
+  color: var(--el-text);
+  min-height: 100vh;
+  font-family: 'Manrope', 'Inter', 'Segoe UI', sans-serif;
+  position: relative;
+  overflow-x: clip;
+  padding-bottom: 102px;
+}
+
+.elstom-root * {
+  box-sizing: border-box;
+}
+
+.elstom-ambient {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(320px 320px at 14% 20%, rgba(78, 108, 255, 0.11), transparent 70%),
+    radial-gradient(360px 360px at 80% 28%, rgba(240, 91, 191, 0.14), transparent 72%),
+    radial-gradient(430px 430px at 52% 88%, rgba(87, 212, 255, 0.12), transparent 75%);
+  animation: elstomAmbientShift 14s ease-in-out infinite;
+}
+
+@keyframes elstomAmbientShift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -16px, 0); }
+}
+
+.elstom-container {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.elstom-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid rgba(131, 148, 231, 0.24);
+  backdrop-filter: blur(12px);
+  background: rgba(248, 249, 255, 0.72);
+}
+
+.elstom-header__inner {
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.elstom-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.elstom-brand__logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 14px 30px -22px rgba(63, 88, 208, 0.8);
+}
+
+.elstom-brand__text {
+  display: inline-grid;
+  line-height: 1.08;
+}
+
+.elstom-brand__text strong {
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  background: linear-gradient(90deg, var(--el-blue), var(--el-violet), var(--el-pink));
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.elstom-brand__text small {
+  color: var(--el-muted);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.elstom-section {
+  padding: clamp(46px, 8vw, 88px) 0;
+}
+
+.elstom-hero {
+  padding: clamp(46px, 8vw, 96px) 0 clamp(40px, 8vw, 80px);
+}
+
+.elstom-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(24px, 5vw, 56px);
+  align-items: center;
+}
+
+.elstom-eyebrow {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--el-muted);
+  font-weight: 700;
+}
+
+.elstom-hero h1 {
+  margin: 14px 0 0;
+  font-size: clamp(34px, 6vw, 66px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  max-width: 850px;
+}
+
+.elstom-hero h1 span {
+  display: inline;
+  background: linear-gradient(90deg, #5b73ff 0%, #8d58ff 52%, #ea56bb 100%);
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.elstom-hero__lead {
+  margin: 18px 0 0;
+  font-size: clamp(16px, 1.4vw, 21px);
+  line-height: 1.64;
+  color: var(--el-muted);
+  max-width: 720px;
+}
+
+.elstom-hero__cta {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.elstom-btn {
+  border: 1px solid transparent;
+  border-radius: 999px;
+  min-height: 50px;
+  padding: 13px 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-decoration: none;
+  cursor: pointer;
+  background: transparent;
+  color: inherit;
+  font-weight: 700;
+  font-size: 15px;
+  transition: transform 0.2s ease, box-shadow 0.25s ease, border-color 0.2s ease, opacity 0.2s ease;
+}
+
+.elstom-btn:hover {
+  transform: translateY(-1px);
+}
+
+.elstom-btn--primary {
+  color: #fff;
+  background: linear-gradient(120deg, var(--el-blue), var(--el-violet), var(--el-pink));
+  box-shadow: 0 20px 45px -24px rgba(102, 93, 255, 0.75);
+}
+
+.elstom-btn--call {
+  color: #fff;
+  background: linear-gradient(120deg, #3957f2, #6a4bff);
+  box-shadow: 0 18px 40px -24px rgba(60, 75, 220, 0.85);
+}
+
+.elstom-btn--wa {
+  color: #081f12;
+  background: linear-gradient(120deg, #2be481, #17c661);
+  box-shadow: 0 18px 36px -24px rgba(26, 188, 89, 0.78);
+}
+
+.elstom-btn--ghost {
+  border-color: rgba(77, 98, 210, 0.34);
+  background: rgba(255, 255, 255, 0.58);
+  color: #25306c;
+}
+
+.elstom-btn--wide {
+  width: 100%;
+}
+
+.elstom-facts {
+  margin-top: 26px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.elstom-facts__item {
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid var(--el-border);
+  background: var(--el-card);
+  backdrop-filter: blur(8px);
+}
+
+.elstom-facts__item strong {
+  display: block;
+  font-size: 25px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  background: linear-gradient(96deg, var(--el-blue), var(--el-violet), var(--el-pink));
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.elstom-facts__item span {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--el-muted);
+}
+
+.elstom-hero__visual {
+  position: relative;
+  min-height: clamp(340px, 38vw, 500px);
+  display: grid;
+  place-items: center;
+}
+
+.elstom-orbit {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(133, 109, 255, 0.26);
+  animation: elstomSpin 18s linear infinite;
+}
+
+.elstom-orbit--1 { width: 92%; aspect-ratio: 1/1; }
+.elstom-orbit--2 { width: 72%; aspect-ratio: 1/1; animation-duration: 13s; animation-direction: reverse; }
+.elstom-orbit--3 { width: 46%; aspect-ratio: 1/1; animation-duration: 8.8s; }
+
+@keyframes elstomSpin {
+  to { transform: rotate(360deg); }
+}
+
+.elstom-glass-card {
+  width: min(380px, 90%);
+  padding: 24px;
+  border-radius: 22px;
+  border: 1px solid rgba(143, 146, 255, 0.34);
+  background:
+    linear-gradient(150deg, rgba(255,255,255,0.72), rgba(255,255,255,0.42)),
+    radial-gradient(220px 160px at 0% 0%, rgba(87,212,255,0.28), transparent 60%);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 34px 70px -35px rgba(80, 76, 190, 0.75);
+  display: grid;
+  gap: 12px;
+  text-align: left;
+}
+
+.elstom-glass-card__logo {
+  width: 70px;
+  height: 70px;
+  border-radius: 18px;
+  object-fit: cover;
+  box-shadow: 0 20px 36px -24px rgba(69, 71, 185, 0.8);
+}
+
+.elstom-glass-card h3 {
+  margin: 4px 0 0;
+  font-size: 24px;
+  line-height: 1.15;
+}
+
+.elstom-glass-card p {
+  margin: 0;
+  color: var(--el-muted);
+  line-height: 1.55;
+  font-size: 15px;
+}
+
+.elstom-section__head p {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--el-muted);
+  font-weight: 700;
+}
+
+.elstom-section__head h2 {
+  margin: 10px 0 0;
+  font-size: clamp(30px, 4.2vw, 50px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.elstom-branches-grid {
+  margin-top: 26px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.elstom-branch-card {
+  border-radius: 22px;
+  border: 1px solid rgba(112, 124, 220, 0.25);
+  background: var(--el-card);
+  backdrop-filter: blur(10px);
+  padding: 18px;
+  box-shadow: 0 22px 45px -32px rgba(76, 82, 180, 0.7);
+  display: grid;
+  gap: 12px;
+}
+
+.elstom-branch-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.elstom-branch-card h3 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.elstom-branch-card__top span {
+  font-size: 11px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.elstom-branch-card__top .is-confirmed {
+  color: #225a39;
+  background: rgba(43, 228, 129, 0.2);
+}
+
+.elstom-branch-card__top .is-partial {
+  color: #864f11;
+  background: rgba(250, 188, 86, 0.24);
+}
+
+.elstom-branch-card__address,
+.elstom-branch-card__meta {
+  margin: 0;
+  color: var(--el-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.elstom-branch-card__phones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.elstom-branch-card__phones a {
+  text-decoration: none;
+  color: #2b2f7f;
+  font-weight: 700;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(114, 121, 224, 0.24);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.elstom-icon-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.elstom-icon-link {
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #2f3677;
+  border: 1px solid rgba(115, 125, 230, 0.35);
+  background: rgba(255, 255, 255, 0.76);
+  text-decoration: none;
+}
+
+.elstom-icon-link.is-disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.elstom-map-scheme {
+  margin-top: 26px;
+  border-radius: 24px;
+  border: 1px solid rgba(130, 130, 235, 0.24);
+  background: rgba(255, 255, 255, 0.6);
+  min-height: 360px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 24px 52px -36px rgba(73, 86, 179, 0.72);
+}
+
+.elstom-map-scheme__surface {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(370px 250px at 80% 12%, rgba(240, 91, 191, 0.18), transparent 65%),
+    radial-gradient(460px 280px at 18% 80%, rgba(87, 212, 255, 0.2), transparent 68%),
+    repeating-linear-gradient(90deg, rgba(105, 121, 214, 0.08) 0, rgba(105, 121, 214, 0.08) 1px, transparent 1px, transparent 56px),
+    repeating-linear-gradient(0deg, rgba(105, 121, 214, 0.08) 0, rgba(105, 121, 214, 0.08) 1px, transparent 1px, transparent 56px);
+}
+
+.elstom-map-node {
+  position: absolute;
+  border: 0;
+  cursor: pointer;
+  color: #fff;
+  background: linear-gradient(120deg, #5d67ff, #825fff, #e95bbd);
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 7px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 16px 30px -20px rgba(87, 77, 202, 0.85);
+}
+
+.elstom-map-node .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.18);
+}
+
+.elstom-map-node--1 { top: 15%; left: 7%; }
+.elstom-map-node--2 { top: 68%; left: 14%; }
+.elstom-map-node--3 { top: 48%; left: 38%; }
+.elstom-map-node--4 { top: 21%; left: 56%; }
+.elstom-map-node--5 { top: 62%; left: 56%; }
+.elstom-map-node--6 { top: 34%; left: 76%; }
+
+.elstom-services {
+  background: linear-gradient(180deg, rgba(255,255,255,0.42), rgba(255,255,255,0));
+}
+
+.elstom-services-grid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.elstom-service-card {
+  border-radius: 20px;
+  border: 1px solid rgba(122, 134, 226, 0.25);
+  background: rgba(255, 255, 255, 0.68);
+  padding: 18px;
+  box-shadow: 0 24px 48px -34px rgba(77, 85, 191, 0.68);
+}
+
+.elstom-service-card h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.elstom-service-card p {
+  margin: 8px 0 0;
+  line-height: 1.55;
+  color: var(--el-muted);
+  font-size: 14px;
+}
+
+.elstom-flow-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 18px;
+}
+
+.elstom-flow-options {
+  margin-top: 22px;
+  display: grid;
+  gap: 8px;
+}
+
+.elstom-flow-options button {
+  border: 1px solid rgba(118, 130, 227, 0.28);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.6);
+  min-height: 46px;
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 15px;
+  color: var(--el-text);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.elstom-flow-options button.is-active {
+  color: #fff;
+  background: linear-gradient(118deg, #5b70ff, #7f64ff, #eb58bc);
+  box-shadow: 0 18px 42px -25px rgba(102, 90, 220, 0.85);
+}
+
+.elstom-flow-result {
+  border-radius: 24px;
+  border: 1px solid rgba(130, 142, 236, 0.26);
+  background: rgba(255, 255, 255, 0.72);
+  padding: clamp(18px, 3vw, 28px);
+  box-shadow: 0 28px 54px -36px rgba(70, 82, 177, 0.75);
+}
+
+.elstom-flow-result__tag {
+  margin: 0;
+  display: inline-flex;
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 12px;
+  color: #203f9f;
+  background: rgba(90, 120, 255, 0.16);
+  font-weight: 700;
+}
+
+.elstom-flow-result h3 {
+  margin: 12px 0 0;
+  font-size: 26px;
+  line-height: 1.1;
+}
+
+.elstom-flow-result p {
+  margin: 12px 0 20px;
+  color: var(--el-muted);
+  line-height: 1.6;
+}
+
+.elstom-trust-grid,
+.elstom-promos-grid {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.elstom-trust-card,
+.elstom-promo-card {
+  border-radius: 22px;
+  border: 1px solid rgba(126, 137, 230, 0.24);
+  background: rgba(255, 255, 255, 0.72);
+  padding: 20px;
+  box-shadow: 0 22px 46px -34px rgba(68, 81, 170, 0.7);
+}
+
+.elstom-trust-card h3,
+.elstom-promo-card h3 {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.elstom-trust-card p,
+.elstom-promo-card p {
+  margin: 10px 0 0;
+  color: var(--el-muted);
+  line-height: 1.55;
+}
+
+.elstom-promos {
+  background: linear-gradient(180deg, rgba(238, 231, 255, 0.45), rgba(255,255,255,0));
+}
+
+.elstom-contact-list {
+  margin-top: 20px;
+  display: grid;
+  gap: 12px;
+}
+
+.elstom-contact-row {
+  border-radius: 20px;
+  border: 1px solid rgba(126, 136, 228, 0.24);
+  background: rgba(255, 255, 255, 0.74);
+  padding: 16px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+}
+
+.elstom-contact-row__address {
+  border: 0;
+  text-align: left;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  color: inherit;
+}
+
+.elstom-contact-row__address strong {
+  display: block;
+  font-size: 18px;
+}
+
+.elstom-contact-row__address span {
+  display: block;
+  margin-top: 5px;
+  color: var(--el-muted);
+}
+
+.elstom-contact-row__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.elstom-disclaimer {
+  margin-top: 8px;
+  margin-bottom: 18px;
+}
+
+.elstom-disclaimer .elstom-container {
+  border-radius: 18px;
+  border: 1px solid rgba(126, 134, 228, 0.25);
+  background: rgba(255,255,255,0.72);
+  padding: 20px;
+  color: var(--el-muted);
+  line-height: 1.6;
+}
+
+.elstom-mobile-bar {
+  position: fixed;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  z-index: 32;
+  border-radius: 18px;
+  border: 1px solid rgba(117, 127, 221, 0.28);
+  background: rgba(248, 250, 255, 0.9);
+  backdrop-filter: blur(10px);
+  padding: 9px;
+  display: none;
+  gap: 8px;
+}
+
+.elstom-mobile-bar a {
+  flex: 1;
+  min-height: 48px;
+  border-radius: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.elstom-mobile-bar a:first-child {
+  color: #fff;
+  background: linear-gradient(120deg, #425eff, #6e58ff);
+}
+
+.elstom-mobile-bar a:last-child {
+  color: #08230f;
+  background: linear-gradient(120deg, #2de785, #19ca64);
+}
+
+.elstom-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  padding: 16px;
+  background: rgba(12, 13, 26, 0.52);
+  display: grid;
+  place-items: center;
+}
+
+.elstom-modal__content {
+  width: min(940px, 100%);
+  max-height: min(88vh, 880px);
+  overflow-y: auto;
+  border-radius: 24px;
+  border: 1px solid rgba(149, 154, 246, 0.28);
+  background: linear-gradient(155deg, rgba(255,255,255,0.96), rgba(247,245,255,0.95));
+  box-shadow: 0 46px 90px -44px rgba(29, 39, 113, 0.75);
+  padding: clamp(16px, 3vw, 28px);
+}
+
+.elstom-modal__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.elstom-modal__head h3 {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 38px);
+  line-height: 1.04;
+}
+
+.elstom-modal__head p {
+  margin: 8px 0 0;
+  color: var(--el-muted);
+}
+
+.elstom-modal__close {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(121, 132, 228, 0.34);
+  background: rgba(255,255,255,0.74);
+  color: #2f3772;
+  cursor: pointer;
+}
+
+.elstom-modal__meta {
+  margin-top: 16px;
+  display: grid;
+  gap: 8px;
+}
+
+.elstom-meta-line {
+  border-radius: 16px;
+  border: 1px solid rgba(123, 133, 228, 0.24);
+  background: rgba(255,255,255,0.74);
+  padding: 11px 12px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.elstom-meta-line__icon {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: rgba(99, 112, 221, 0.14);
+  color: #3948a8;
+}
+
+.elstom-meta-line p {
+  margin: 0;
+  color: var(--el-muted);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.elstom-meta-line div {
+  margin-top: 3px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #182058;
+  overflow-wrap: anywhere;
+}
+
+.elstom-meta-line a {
+  color: #2a35a5;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.elstom-modal__phones {
+  display: grid;
+  gap: 4px;
+}
+
+.elstom-modal__services {
+  margin-top: 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(123, 134, 227, 0.25);
+  background: rgba(255,255,255,0.78);
+  padding: 14px;
+}
+
+.elstom-modal__services h4 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.elstom-modal__services ul {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 6px;
+  color: var(--el-muted);
+}
+
+.elstom-modal__actions {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.elstom-hide-mobile {
+  display: inline-flex;
+}
+
+@media (max-width: 1200px) {
+  .elstom-services-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .elstom-branches-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 920px) {
+  .elstom-container { padding-inline: 16px; }
+
+  .elstom-header__inner {
+    min-height: 72px;
+  }
+
+  .elstom-hide-mobile {
+    display: none;
+  }
+
+  .elstom-hero__grid,
+  .elstom-flow-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .elstom-hero__visual {
+    min-height: 300px;
+  }
+
+  .elstom-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .elstom-services-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .elstom-trust-grid,
+  .elstom-promos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .elstom-contact-row {
+    grid-template-columns: 1fr;
+  }
+
+  .elstom-contact-row__actions {
+    justify-content: flex-start;
+  }
+
+  .elstom-mobile-bar {
+    display: flex;
+  }
+}
+
+@media (max-width: 680px) {
+  .elstom-branches-grid,
+  .elstom-services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .elstom-map-scheme {
+    min-height: 410px;
+  }
+
+  .elstom-map-node {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+
+  .elstom-map-node--1 { top: 12%; left: 5%; }
+  .elstom-map-node--2 { top: 69%; left: 6%; }
+  .elstom-map-node--3 { top: 44%; left: 29%; }
+  .elstom-map-node--4 { top: 22%; left: 50%; }
+  .elstom-map-node--5 { top: 66%; left: 45%; }
+  .elstom-map-node--6 { top: 32%; left: 67%; }
+
+  .elstom-modal {
+    padding: 12px;
+    align-items: end;
+  }
+
+  .elstom-modal__content {
+    width: 100%;
+    border-radius: 18px;
+    max-height: min(90vh, 760px);
+  }
+
+  .elstom-modal__actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .elstom-btn {
+    width: 100%;
+  }
+}
