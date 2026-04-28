@@ -15,8 +15,21 @@ import FinalCTA from './components/FinalCTA.jsx';
 import Footer from './components/Footer.jsx';
 import ChatWidget from './components/ChatWidget.jsx';
 import CallbackModal from './components/CallbackModal.jsx';
+import { getLandingFromPath } from './landings/registry.js';
 
 export default function App() {
+  const pathname = typeof window !== 'undefined' ? window.location.pathname : '/';
+  const landingEntry = getLandingFromPath(pathname);
+
+  if (landingEntry?.Component) {
+    const LandingComponent = landingEntry.Component;
+    return <LandingComponent />;
+  }
+
+  return <MainSiteApp />;
+}
+
+function MainSiteApp() {
   const [chatOpen, setChatOpen] = useState(false);
   const [callbackOpen, setCallbackOpen] = useState(false);
   const [demoOpenRequest, setDemoOpenRequest] = useState({ id: null, nonce: 0 });

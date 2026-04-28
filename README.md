@@ -21,6 +21,17 @@ npm run preview  # preview production build
 
 Требуется Node 18+.
 
+### Локальный просмотр для Claude Code
+
+```bash
+npm install
+npm run dev -- --host 0.0.0.0
+```
+
+Далее:
+- открыть URL, который покажет Vite в терминале;
+- после изменений проверять главную `/` и будущие страницы вида `/zygoma-center`.
+
 Для AI-чата задайте переменные окружения для backend:
 
 ```bash
