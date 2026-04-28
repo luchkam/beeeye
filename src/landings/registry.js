@@ -5,6 +5,7 @@
 
 import ZygomaCenterLanding from './zygoma-center/ZygomaCenterLanding.jsx';
 import AkzhayikStomLanding from './akzhayik-stom/AkzhayikStomLanding.jsx';
+import LibertyStomLanding from './liberty-stom/LibertyStomLanding.jsx';
 
 const landingRegistry = {
   'zygoma-center': {
@@ -14,6 +15,10 @@ const landingRegistry = {
   'akzhayik-stom': {
     Component: AkzhayikStomLanding,
     title: 'Стоматология Акжайык',
+  },
+  'liberty-stom': {
+    Component: LibertyStomLanding,
+    title: 'Liberty Stom',
   },
 };
 
