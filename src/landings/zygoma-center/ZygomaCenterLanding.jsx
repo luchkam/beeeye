@@ -510,8 +510,18 @@ function Hero() {
                   boxShadow: 'inset 0 0 60px rgba(212,175,111,0.08), 0 30px 80px -20px rgba(0,0,0,0.6)',
                 }}
               >
-                <div style={{ width: '60%', aspectRatio: '1 / 1', display: 'grid', placeItems: 'center' }}>
-                  <BrandLogo size="100%" light drawStroke />
+                <div style={{ width: '74%', aspectRatio: '1 / 1', display: 'grid', placeItems: 'center' }}>
+                  <img
+                    src={zygomaLogo}
+                    alt="Zygoma Center by dr. Utegenov"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      borderRadius: '18%',
+                      boxShadow: '0 12px 36px rgba(0, 0, 0, 0.45)',
+                    }}
+                  />
                 </div>
               </div>
             </div>
